@@ -1,81 +1,43 @@
 # cloudwatch-agent
 
+![alt text](image.png)
 
-How To Install and Set Up an AWS CloudWatch Agent Using CLI?
-Last Updated : 16 Jul, 2023
+![alt text](image-1.png)
 
-We will see how to install and configure the new unified CloudWatch agent on a running EC2 Linux instance. Collect logs from the Apache HTTP log file and collect metrics from our EC2 instance. New unified CloudWatch can collect both logs and metrics from EC2 instances. The older CloudWatch Logs agent is on the path to deprecation.
-Features of AWS EC2
+![alt text](image-2.png)
 
-    Collect internal system-level metrics from Amazon EC2 instances across operating systems. The metrics can include in-guest metrics, in addition to the metrics for EC2 instances. The additional metrics that can be collected are listed in the Metrics collected by the CloudWatch agent.
-    Collect system-level metrics from on-premises servers. These can include servers in a hybrid environment as well as servers not managed by AWS.
-    Retrieve custom metrics from your applications or services using the StatsD and collectd protocols. StatsD is supported on both Linux servers and servers running Windows Server. collectd is supported only on Linux servers.
-    Collect logs from Amazon EC2 instances or on-premises servers, running either Linux or Windows Server.
-    Collect Custom logs from your applications.
+Choose `CloudWatchAgentAdminPolicy` role which  already created by using AWS Managed Rule `CloudWatchAgentAdminPolicy`
 
-Note: The CloudWatch agent does not support collecting logs from FIFO pipes.
-CloudWatch Use Cases
+![alt text](image-3.png)
 
-    Control applications logs. We can track logs from various applications in the CloudWatch console.
-    Monitor AWS instances resources and optimize them. Using CloudWatch, we can get information about the health and performance of running AWS resources. And based on this, we can draw a conclusion about the use of resources (increase or decrease the use of resources).
-    Troubleshoot the AWS infrastructure. We can track and send alerts to the SNS topic based on logs or metrics. And also, if necessary, configure Autoscaling based on the metrics of our instance.
 
-Benefits of CloudWatch
+sudo yum install amazon-cloudwatch-agent
+ 
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+ 
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
+ 
+sudo systemctl status amazon-cloudwatch-agent
+ 
+sudo systemctl start amazon-cloudwatch-agent
+ 
+sudo systemctl enable amazon-cloudwatch-agent
 
-CloudWatch offers several benefits:
 
-    Collects metrics and logs for AWS environments. We can collect and track metrics in real-time, as well as see the load graph for a long time. Also, we can monitor our logs from our applications.
-    Visibility from all monitoring data on one platform. We can monitor logs and metrics from different instances and services in one CloudWatch console.
-    Increases and optimizes the operational performance of AWS. By tracking logs and metrics in real-time, we can add capacity or remove unnecessary capacity. By doing this, we can optimize costs and control the stability of applications and instances.
-    Easy integration with other AWS resources. If necessary, CloudWatch integrates with different AWS services, for example, AWS SNS, AWS Lambda, AWS Auto Scaling, AWS CloudFormation, etc.
 
-Configure The CloudWatch Agent On a Running EC2 Linux Instance
-1. Start An EC2 Instance
+- For installation CloudWatch agent we need to execute the following command:
 
-Step 1: Log in to your AWS account and start the Amazon Linux EC2 instance that you have already created.
+```sudo yum install amazon-cloudwatch-agent -y```
 
-Start Instance
-2. Attaching an IAM Role
+![alt text](image-4.png)
 
-Step 1: Create IAM Role with permission for reading information from the instance and writing it to CloudWatch.
-
-For that, we need to execute the following steps:
-
-    Go to the navigation panel, choose Roles, and then choose Create Role.
-    Under Select type of trusted entity, choose AWS service.
-    Under Use case, choose EC2 and then choose Next.
-    In the list of policies, select the check box next to CloudWatchAgentServerPolicy and then choose Next. 
-
-Policy name
-Role Name 
-
-Step 1: For Role name, enter a name for your new role, such as “CloudWatchRole” or another name that you prefer.Confirm that CloudWatchAgentAdminPolicy appears next to Policies.Choose to Create role.
-
-Step 2: Attach IAM Role from the previous step to our Amazon Linux EC2 instance. For that, we need to go to the navigation panel, choose EC2 and then choose Instances. Then select our instance and choose to Modify IAM role.
-
-IAM role
-
-On the next page, we need to choose our role and then choose the Update IAM role.
-3. Installing The CloudWatch Agent
-
-Step 1: Install the CloudWatch agent. First of all, we need to log in to our EC2 instance. (Select instance –> push Connect button). On the next page choose EC2 Instance Connect and click Connect button. A command prompt will pop up after connecting.
-
-Note: If any error occurs, then make sure that port SSH is open on your instance. 
-
-connect cloud watch
-
-For installation CloudWatch agent we need to execute the following command:
-
-sudo yum install amazon-cloudwatch-agent -y
-
-After running this command you will see that installation is complete.
+- After running this command you will see that installation is complete.
 
 Amazon Cloud watch
 
-Step 2: Configure the CloudWatch agent with the wizard and fill in data about our log file.To create a configuration file execute the following command:
+- Configure the CloudWatch agent with the wizard and fill in data about our log file.To create a configuration file execute the following command:
 
-sudo /opt/aws/amazon-cloudwatch-agent
-/bin/amazon-cloudwatch-agent-config-wizard
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
 
 After running this command we need to answer the following questions (I will provide answers for my configuration):
 
