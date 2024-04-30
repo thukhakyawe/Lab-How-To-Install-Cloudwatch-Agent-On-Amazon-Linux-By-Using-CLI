@@ -19,7 +19,6 @@
 
 ```
 sudo yum install amazon-cloudwatch-agent -y 
-
 ```
 
 - After running this command you will see that installation is complete.
