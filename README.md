@@ -1,6 +1,6 @@
 # Lab-How-To-Install-Cloudwatch-Agent-On-Amazon-Linux-By-Using-CLI #
 
-## Step 1 - Create `EC2` and attach `CloudWatchAgentAdminPolicy` role to EC2 ##
+### Step 1 - Create `EC2` and attach `CloudWatchAgentAdminPolicy` role to EC2 ###
 
 ![alt text](image.png)
 
@@ -8,24 +8,12 @@
 
 ![alt text](image-2.png)
 
-Choose `CloudWatchAgentAdminPolicy` role which  already created by using AWS Managed Rule `CloudWatchAgentAdminPolicy`
+- Choose `CloudWatchAgentAdminPolicy` role which  already created by using AWS Managed Rule `CloudWatchAgentAdminPolicy`
 
 ![alt text](image-3.png)
 
 
-sudo yum install amazon-cloudwatch-agent
- 
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
- 
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
- 
-sudo systemctl status amazon-cloudwatch-agent
- 
-sudo systemctl start amazon-cloudwatch-agent
- 
-sudo systemctl enable amazon-cloudwatch-agent
-
-## Step 2 - Install CloudWatch Agent on EC2
+### Step 2 - Install CloudWatch Agent on EC2 ###
 
 - For installation CloudWatch agent we need to execute the following command:
 
@@ -34,7 +22,6 @@ sudo systemctl enable amazon-cloudwatch-agent
 - After running this command you will see that installation is complete.
 
 ![alt text](image-4.png)
-
 
 - Configure the CloudWatch agent with the wizard and fill in data about our log file.To create a configuration file execute the following command:
 
@@ -312,12 +299,7 @@ netstat_tcp_established, netstat_tcp_time_wait
 
 25. Do you want to store the config in the SSM parameter store? (no)
 
-After answering these questions, we see that program exits:
-
-Program exists know
-
 ![alt text](image-29.png)
-
 
 - The configuration file will store in the “bin” folder:
 
