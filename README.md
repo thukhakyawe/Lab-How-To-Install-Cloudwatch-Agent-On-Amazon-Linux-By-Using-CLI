@@ -27,7 +27,9 @@ sudo yum install amazon-cloudwatch-agent -y
 
 - Configure the CloudWatch agent with the wizard and fill in data about our log file.To create a configuration file execute the following command:
 
-``` sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard ```
+```
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+```
 
 - After running this command we need to answer the following questions (I will provide answers for my configuration):
 
@@ -305,7 +307,9 @@ netstat_tcp_established, netstat_tcp_time_wait
 
 - The configuration file will store in the “bin” folder:
 
-``` ls /opt/aws/amazon-cloudwatch-agent/bin/ ```
+```
+ls /opt/aws/amazon-cloudwatch-agent/bin/
+```
 
 - Name - `config.json`
 
@@ -313,7 +317,9 @@ netstat_tcp_established, netstat_tcp_time_wait
 
 - To launch the CloudWatch agent we need to execute the following command:
 
-``` sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s ```
+```
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+```
 
 - After running this command we see that execution is successfully finished.
 
@@ -321,7 +327,9 @@ netstat_tcp_established, netstat_tcp_time_wait
 
 - Check CloudWatch Agent Status
 
-``` sudo systemctl status amazon-cloudwatch-agent ```
+```
+sudo systemctl status amazon-cloudwatch-agent
+```
 
 ![alt text](image-31.png)
 
