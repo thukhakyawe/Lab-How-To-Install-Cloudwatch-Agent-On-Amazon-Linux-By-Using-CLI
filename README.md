@@ -17,7 +17,10 @@
 
 - For installation CloudWatch agent we need to execute the following command:
 
-```sudo yum install amazon-cloudwatch-agent -y```
+```
+sudo yum install amazon-cloudwatch-agent -y 
+
+```
 
 - After running this command you will see that installation is complete.
 
