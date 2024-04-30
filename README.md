@@ -1,4 +1,6 @@
-# cloudwatch-agent
+# Lab-How-To-Install-Cloudwatch-Agent-On-Amazon-Linux-By-Using-CLI #
+
+## Step 1 - Create `EC2` and attach `CloudWatchAgentAdminPolicy` role to EC2 ##
 
 ![alt text](image.png)
 
@@ -23,122 +25,328 @@ sudo systemctl start amazon-cloudwatch-agent
  
 sudo systemctl enable amazon-cloudwatch-agent
 
-
+## Step 2 - Install CloudWatch Agent on EC2
 
 - For installation CloudWatch agent we need to execute the following command:
 
 ```sudo yum install amazon-cloudwatch-agent -y```
 
-![alt text](image-4.png)
-
 - After running this command you will see that installation is complete.
 
-Amazon Cloud watch
+![alt text](image-4.png)
+
 
 - Configure the CloudWatch agent with the wizard and fill in data about our log file.To create a configuration file execute the following command:
 
-sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+``` sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard ```
 
-After running this command we need to answer the following questions (I will provide answers for my configuration):
+- After running this command we need to answer the following questions (I will provide answers for my configuration):
 
-    On which OS are you planning to use the agent? (Linux)
-    Are you using EC2 or On-Premises hosts? (EC2)
-    Which user are you planning to run the agent? (root)
-    Do you want to turn on the StatsD daemon? (yes)
-    StatsD is a popular open-source solution that can gather metrics from a wide variety of applications.
-    Which port do you want the StatsD daemon to listen to? (8125)
-    What is the collection interval for the StatsD daemon? (10s)
-    What is the aggregation interval for metrics collected by StatsD daemon?(the 60s)
-    Do you want to monitor metrics from CollectD?(No)
-    Do you want to monitor any host metrics? e.g. CPU, memory, etc. (yes)
-    Do you want to monitor CPU metrics per core? (yes)
-    Do you want to add ec2 dimensions (ImageId, InstanceId, InstanceType, AutoScalingGroupName) into all of your metrics if the info is available? (yes)
-    Do you want to aggregate ec2 dimensions (InstanceId)? (yes)
-    Would you like to collect your metrics at high resolution (sub-minute resolution)? This enables sub-minute resolution for all metrics, but you can customize for specific metrics in the output JSON file. (60s)
-    Which default metrics config do you want? (Standard) 
+![alt text](image-5.png)
+
+1. On which OS are you planning to use the agent? (Linux)
+
+![alt text](image-6.png)
+
+2. Are you using EC2 or On-Premises hosts? (EC2)
+
+![alt text](image-7.png)
+
+3. Which user are you planning to run the agent? (cwagent)
+
+![alt text](image-8.png)
+
+4. Do you want to turn on the StatsD daemon? (yes)
+
+![alt text](image-9.png)
+
+5. Which port do you want the StatsD daemon to listen to? (8125)
+
+![alt text](image-10.png)
+
+
+6. What is the collection interval for the StatsD daemon? (10s)
+
+![alt text](image-11.png)
+
+
+7. What is the aggregation interval for metrics collected by 
+StatsD daemon?(the 60s)
+
+![alt text](image-12.png)
+
+
+8. Do you want to monitor metrics from CollectD?(No)
+
+![alt text](image-13.png)
+
+
+9. Do you want to monitor any host metrics? e.g. CPU, memory, etc. (yes)
+
+![alt text](image-14.png)
+
+
+10. Do you want to monitor CPU metrics per core? (yes)
+
+![alt text](image-15.png)
+
+11. Do you want to add ec2 dimensions (ImageId, InstanceId, InstanceType, AutoScalingGroupName) into all of your metrics if the info is available? (yes)
+
+![alt text](image-16.png)
+
+
+12. Do you want to aggregate ec2 dimensions (InstanceId)? (yes)
+
+![alt text](image-17.png)
+
+
+13. Would you like to collect your metrics at high resolution (sub-minute resolution)? This enables sub-minute resolution for all metrics, but you can customize for specific metrics in the output JSON file. (60s)
+
+![alt text](image-18.png)
+
+
+14. Which default metrics config do you want? (Standard) 
     On this question, you can choose the answer between Basic, Standard, Advanced, and None. (Detailed description below)
 
-Detail level 	Metrics included
-Basic 	
+<table>
 
-Mem: mem_used_percent
+<tr>
+<td width="33%"">
+Detail level - Basic
+</td>
+<td width="33%">
+Metrics included
+</td>
+</tr>
 
-Disk: disk_used_percent
+<tr>
+<td width="33%"">
+Mem	
+</td>
+<td width="33%">
+mem_used_percent
+</td>
+</tr>
 
-The disk metrics such as disk_used_percent have a dimension for Partition, which means that the number of custom metrics generated is dependent on the number of partitions associated with your instance. The number of disk partitions you have depends on which AMI you are using and the number of Amazon EBS volumes you attach to the server.
-Standard 	
+<tr>
+<td width="33%"">
+Disk	
+</td>
+<td width="33%">
+disk_used_percent
+</td>
+</tr>
 
-CPU: cpu_usage_idle, cpu_usage_iowait, cpu_usage_user, cpu_usage_system
+</table>
 
-Disk: disk_used_percent, disk_inodes_free
+------
 
-Diskio: diskio_io_time
+<table>
 
-Mem: mem_used_percent
+<tr>
+<td width="33%"">
+Detail level - Standard
+</td>
+<td width="33%">
+Metrics included
+</td>
+</tr>
 
-Swap: swap_used_percent
-Advanced 	
+<tr>
+<td width="33%"">
+CPU	
+</td>
+<td width="33%">
+cpu_usage_idle, cpu_usage_iowait, cpu_usage_user, cpu_usage_system
+</td>
+</tr>
 
-CPU: cpu_usage_idle, cpu_usage_iowait, cpu_usage_user, cpu_usage_system
+<tr>
+<td width="33%"">
+Disk	
+</td>
+<td width="33%">
+disk_used_percent, disk_inodes_free
+</td>
+</tr>
 
-Disk: disk_used_percent, disk_inodes_free
+<tr>
+<td width="33%"">
+Diskio	
+</td>
+<td width="33%">
+diskio_io_time
+</td>
+</tr>
 
-Diskio: diskio_io_time, diskio_write_bytes, diskio_read_bytes, diskio_writes, diskio_reads
+<tr>
+<td width="33%"">
+Mem	
+</td>
+<td width="33%">
+mem_used_percent
+</td>
+</tr>
 
-Mem: mem_used_percent
+<tr>
+<td width="33%"">
+Swap	
+</td>
+<td width="33%">
+swap_used_percent
+</td>
+</tr>
 
-Netstat: netstat_tcp_established, netstat_tcp_time_wait
+</table>
 
-Swap: swap_used_percent
+-----
 
-After that, you will see the current configuration (JSON format) and you will need to answer the questions:
+<table>
 
-    Are you satisfied with the above config? (yes)
-    Do you have any existing CloudWatch Log Agent? (no)
-    Do you want to monitor any log files? (yes)
-    Because in this tutorial we will monitor our Apache log file(e.g. error_log)
-    Log file path: (/var/log/httpd/error_log)
-    default choice: (e.g. CloudWatchDemo)
-    Log stream name: ({instance_id})
-    Log Group Retention in days (2)
-    Do you want to specify any additional log files to monitor? (no)
-    Do you want to store the config in the SSM parameter store? (no)
+<tr>
+<td width="33%"">
+Detail level - Advanced
+</td>
+<td width="33%">
+Metrics included
+</td>
+</tr>
+
+<tr>
+<td width="33%"">
+CPU	
+</td>
+<td width="33%">
+cpu_usage_idle, cpu_usage_iowait, cpu_usage_user, cpu_usage_system
+</td>
+</tr>
+
+<tr>
+<td width="33%"">
+Disk	
+</td>
+<td width="33%">
+disk_used_percent, disk_inodes_free
+</td>
+</tr>
+
+<tr>
+<td width="33%"">
+Diskio	
+</td>
+<td width="33%">
+diskio_io_time, diskio_write_bytes, diskio_read_bytes, diskio_writes, diskio_reads
+</td>
+</tr>
+
+<tr>
+<td width="33%"">
+Mem	
+</td>
+<td width="33%">
+mem_used_percent
+</td>
+</tr>
+
+<tr>
+<td width="33%"">
+Swap	
+</td>
+<td width="33%">
+swap_used_percent
+</td>
+</tr>
+
+<tr>
+<td width="33%"">
+Netstat	
+</td>
+<td width="33%">
+netstat_tcp_established, netstat_tcp_time_wait
+</td>
+</tr>
+
+</table>
+
+-----
+
+15. Are you satisfied with the above config? (yes)
+
+![alt text](image-19.png)
+    
+16. Do you have any existing CloudWatch Log Agent? (no)
+
+![alt text](image-20.png)
+
+17.Do you want to monitor any log files? (yes)
+
+![alt text](image-21.png)
+    
+18. Log file path: (/var/log/httpd/error_log)
+
+![alt text](image-22.png)
+
+19. Log group name:
+
+![alt text](image-23.png)
+
+20. Log group class: (Standard)
+
+![alt text](image-24.png)
+
+21. Log stream name: [{instance_id}]
+
+![alt text](image-25.png)
+
+22. Log Group Retention in days (7)
+
+![alt text](image-26.png)
+
+23. Do you want to specify any additional log files to monitor? (no)
+
+![alt text](image-27.png)
+
+24. Do you want the CloudWatch agent to also retrieve X-ray traces?
+
+![alt text](image-28.png)
+
+25. Do you want to store the config in the SSM parameter store? (no)
 
 After answering these questions, we see that program exits:
 
 Program exists know
 
-The configuration file will store in the “bin” folder:
+![alt text](image-29.png)
 
-ls /opt/aws/amazon-cloudwatch-agent/bin/
 
-Config.jason
+- The configuration file will store in the “bin” folder:
 
-Step 3: Start the CloudWatch agent with our configuration file.To launch the CloudWatch agent we need to execute the following command:
+``` ls /opt/aws/amazon-cloudwatch-agent/bin/ ```
 
-sudo /opt/aws/amazon-cloudwatch-agent/bin/
-amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c 
-file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+- Name - `config.json`
 
-In this command, -a fetch-config causes the agent to load the latest version of the CloudWatch agent configuration file, and 
+## Step 3: Start the CloudWatch agent with our configuration file ##
 
--s starts the agent.
+- To launch the CloudWatch agent we need to execute the following command:
 
-After running this command we see that execution is successfully finished.
+``` sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s ```
 
-Configuration Validation
-Steps To Verify The Cloud Watch For Apache Log File
+- After running this command we see that execution is successfully finished.
 
-For that, we need to execute the following steps:
+![alt text](image-30.png)
 
-Step 1: Go to the navigation panel, and choose CloudWatch.Go to the Log groups. In this folder, we can see the log file from the EC2 Linux instance.
+- Check CloudWatch Agent Status
 
-Log Groups
+``` sudo systemctl status amazon-cloudwatch-agent ```
 
-Addition: In the metric group, we can see all metrics about our EC2 instance(e.g. CPU usage, disk_used_percent, mem_used_percent, swap_used_percent, etc.).
+![alt text](image-31.png)
 
-All metrics
+-----
 
-Here's a complete roadmap for you to become a developer: Learn DSA -> Master Frontend/Backend/Full Stack -> Build Projects -> Keep Applying to Jobs
+***That it is.Congratulations and don't forget to delete your resources.***
 
-And why go anywhere else when our DSA to Development: Coding Guide helps you do this in a single program! Apply now to our DSA to Development Program and our counsellors will connect with you for further guidance & support.
+-----
+
+
+
+
